@@ -1,0 +1,6 @@
+package ConsoleAdventure;
+
+class Item {
+
+	
+}
