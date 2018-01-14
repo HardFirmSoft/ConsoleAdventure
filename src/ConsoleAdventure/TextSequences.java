@@ -83,7 +83,7 @@ class TextSequences extends Main{
 		}
 		menus.mapMenu();
 		System.out.println("Great, you're ready, now remember, if you need anything at all... Press 'h' to open the help menu");
-		
+		TimeUnit.SECONDS.sleep(2);
 		GameLoop.launch(); //launch main game loop
 	}
 }

@@ -2,67 +2,64 @@ package ConsoleAdventure;
 
 import java.io.Serializable;
 
-class Player implements Serializable {
+public class Player implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private double HP;
 	private String NAME;
-	private double STR;
 	private int STORY_STATUS;
 	private Map MAP;
 	private Inventory INV;
+	private Item HOLDING;
 	
 	Player() {
 		HP = 10.0;
 		NAME = "";
-		STR = 5.0;
 		STORY_STATUS = 0;
 		MAP = new Map();
-		INV = new Inventory(10);
+		INV = new Inventory(0);
+		HOLDING=null;
 	}
 	
 	Player(double HP, String NAME, double STR, int STORY_STATUS){
 		this.HP = HP;
 		this.NAME = NAME;
-		this.STR = STR;
 		this.STORY_STATUS = STORY_STATUS;
 		MAP = new Map();
 		INV = new Inventory(10);
 		
 	}
 	
-	void setHP(double newHP) {
+	public void setHP(double newHP) {
 		this.HP = newHP;
 	}
 	
-	void setNAME(String newNAME) {
+	public void setNAME(String newNAME) {
 		this.NAME = newNAME;
 	}
 	
-	void setSTR(double str) {
-		this.STR = str;
+	public void setHOLDING(Item item) {
+		this.HOLDING = item;
 	}
 	
-	void setSTORY_STATUS(int status) {
+	public void setSTORY_STATUS(int status) {
 		this.STORY_STATUS = status;
 	}
 	
-	double getHP() {
+	public double getHP() {
 		return this.HP;
 	}
 	
-	String getNAME() {
+	public String getNAME() {
 		return this.NAME;
 	}
 	
-	double getSTR() {
-		return this.STR;
-	}
 	
-	int getSTORY_STATUS() {
+	
+	public int getSTORY_STATUS() {
 		return this.STORY_STATUS;
 	}
 	
-	Map getMAP() {
+	public Map getMAP() {
 		return this.MAP;
 	}
 
@@ -79,5 +76,7 @@ class Player implements Serializable {
 		this.INV = INV;
 	}
 	
-	
+	public Item getHOLDING() {
+		return this.HOLDING;
+	}
 }

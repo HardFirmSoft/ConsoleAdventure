@@ -4,15 +4,14 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-class Menus extends Main{
+public class Menus extends Main{
 	
-	Scanner scanner;
+	
 	String option;
 	
 	public Menus() { //basic constructor
 		
 		option = "";
-		scanner = new Scanner(System.in);
 	}
 	
 	/*
@@ -51,6 +50,7 @@ class Menus extends Main{
 				System.out.print("-------------WELCOME-------------\n");
 				print=0;
 			}
+			
 			option=scanner.nextLine();
 			while(option.length()==0) {
 				option = scanner.nextLine();
@@ -108,6 +108,7 @@ class Menus extends Main{
 		System.out.print("'h' opens this menu\n");
 		System.out.print("'i' opens your inventory\n");
 		System.out.print("'m' opens your map\n");
+		System.out.print("'r' describes your current room again.\n");
 		System.out.print("-------------Tutorial-------------\n");
 
 			option = scanner.nextLine();

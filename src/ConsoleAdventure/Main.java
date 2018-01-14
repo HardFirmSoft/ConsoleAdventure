@@ -1,9 +1,11 @@
 package ConsoleAdventure;
 
+import java.util.Scanner;
+
 public class Main {
-		static Player player;
-		static Menus menus = new Menus();
-		
+		public static Player player;
+		public static Menus menus = new Menus();
+		public Scanner scanner = new Scanner(System.in);
 		public static void main(String[] args) {
 			
 			/*
@@ -14,6 +16,7 @@ public class Main {
 			 * 
 			 */
 			try {
+				
 				menus.welcomeMenu();
 			} catch (Exception e) {
 				e.printStackTrace();
