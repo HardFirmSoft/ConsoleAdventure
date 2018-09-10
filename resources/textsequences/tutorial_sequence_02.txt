@@ -1,0 +1,11 @@
+**------------------------INSTRUCTIONS--------------------------**
+**   Travel room by room, using the 'w','a','s', and 'd' keys   **
+**   It would be wise to keep a map... press 'm' to access it   **
+**              ...Keep your wits about you...                  **
+**        I promised to let you live if you found me...         **
+**           ...But you haven't found me yet...                 **
+**            ...Lets see if you make it that long...           **
+**   If you find items along the way, press 'i' to access them  **
+**     If you forget everything else, just press h for help     **
+**            Press 'q' to access the save menu                 **
+**                  Try it! Press 'q' now                       **

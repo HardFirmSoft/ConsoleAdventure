@@ -1,6 +1,7 @@
 package items;
 
 import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
 
 public class Item implements Serializable{
 	
@@ -8,8 +9,7 @@ public class Item implements Serializable{
 	
 	private String name;
 	private String description;
-	
-	
+
 	public Item() {
 		this.name = " ";
 		this.description = " ";
@@ -44,8 +44,14 @@ public class Item implements Serializable{
 		System.out.println(this.getDescription());
 	}
 	
-	public void hold() {
-		System.out.println("Now Holding: " + this.getName());
+	public void use(){
+		System.out.println("Used item: " + this.getName());
+		try{
+			TimeUnit.SECONDS.sleep(2);
+		}catch(InterruptedException e){
+			e.printStackTrace();
+		}
+
 	}
 	
 	

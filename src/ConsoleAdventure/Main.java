@@ -1,6 +1,7 @@
 package ConsoleAdventure;
 
 import java.util.Scanner;
+import items.ColorKey;
 
 public class Main {
 		public static Player player;
@@ -16,10 +17,10 @@ public class Main {
 			 * 
 			 */
 			try {
-				
 				menus.welcomeMenu();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+
 }

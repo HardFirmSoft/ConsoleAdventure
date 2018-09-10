@@ -1,6 +1,9 @@
 package ConsoleAdventure;
 import java.io.Serializable;
 
+import java.util.concurrent.TimeUnit;
+
+import items.ColorKey;
 import rooms.BossRoom;
 import rooms.ItemFoundRoom;
 import rooms.ItemNeededRoom;
@@ -21,10 +24,10 @@ public class Map extends Main implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	Room[][] rooms = new Room[7][7];
+	private Room[][] rooms = new Room[7][7];
 	Room currentRoom;
 	Room previousRoom;
-	Room tempRoom;
+
 	//instantiating the rooms
 	
 	public Map(){
@@ -43,7 +46,7 @@ public class Map extends Main implements Serializable{
 		this.putRandomLocation(bossroom);
 		
 		for(int i=0; i<14;i++) {
-			MobRoom mobRoom = new MobRoom();
+			MobRoom mobRoom = new MobRoom(i);
 			this.putRandomLocation(mobRoom);
 		}
 		for(int i=0; i<5; i++) {
@@ -71,14 +74,17 @@ public class Map extends Main implements Serializable{
 	public Room getCurrentRoom() {
 		return currentRoom;
 	}
-	
 	public void setCurrentRoom(Room room) {
 		this.currentRoom = room;
 	}
 	public Room getPreviousRoom() {
 		return this.previousRoom;
 	}
-	
+
+	public Room getRoom(int x_coordinate, int y_coordinate){
+		return this.rooms[y_coordinate][x_coordinate];
+	}
+
 	/*
 	 * Displays map with all current data in ASCII text.
 	 */
@@ -125,14 +131,15 @@ public class Map extends Main implements Serializable{
 			}
 		}
 	}
-	public void move(char direction) throws InterruptedException{
+	public void move(char direction){
 		int newX;
 		int newY;
-		switch (direction) {
+		try {
+			switch (direction) {
         	case 'w': 
         		if(this.getCurrentRoom().gety_coordinate()==0) {
         			System.out.println("There is no door in that direction!");
-        			//TimeUnit.SECONDS.sleep(1);
+        			TimeUnit.SECONDS.sleep(1);
         		}else {
         			this.previousRoom = this.getCurrentRoom();
         			newY = this.getCurrentRoom().gety_coordinate()-1;
@@ -140,7 +147,7 @@ public class Map extends Main implements Serializable{
         			this.getCurrentRoom().setVisited(true);
         			this.getCurrentRoom().sety_coordinate(newY);
         			System.out.println("You step through the door to the north...");
-        			//TimeUnit.SECONDS.sleep(1);
+        			TimeUnit.SECONDS.sleep(1);
         			this.getCurrentRoom().describe();
         		}
         	
@@ -150,7 +157,7 @@ public class Map extends Main implements Serializable{
         		
         		if(currentRoom.getx_coordinate()==0) {
         			System.out.println("There is no door in that direction!");
-        			//TimeUnit.SECONDS.sleep(1);
+        			TimeUnit.SECONDS.sleep(1);
         		}else {
         			this.previousRoom = this.getCurrentRoom();
         			newX = this.getCurrentRoom().getx_coordinate()-1;
@@ -158,7 +165,7 @@ public class Map extends Main implements Serializable{
         			this.getCurrentRoom().setVisited(true);
         			this.getCurrentRoom().setx_coordinate(newX);
         			System.out.println("You step through the door to the west...");
-        			//TimeUnit.SECONDS.sleep(1);
+        			TimeUnit.SECONDS.sleep(1);
         			this.getCurrentRoom().describe();
         		}
         
@@ -174,7 +181,7 @@ public class Map extends Main implements Serializable{
         			this.getCurrentRoom().setVisited(true);
         			this.getCurrentRoom().sety_coordinate(newY);
         			System.out.println("You step through the door to the south...");
-        			//TimeUnit.SECONDS.sleep(1);
+        			TimeUnit.SECONDS.sleep(1);
         			this.getCurrentRoom().describe();
         		}
         		
@@ -182,22 +189,23 @@ public class Map extends Main implements Serializable{
         	case 'd': 
         		if(this.getCurrentRoom().getx_coordinate()==6) {
         			System.out.println("There is no door in that direction!");
-        			//TimeUnit.SECONDS.sleep(2);
+        			TimeUnit.SECONDS.sleep(2);
         		}else {
-        			this.previousRoom = this.getCurrentRoom();
-        			newX = this.getCurrentRoom().getx_coordinate()+1;
-        			this.setCurrentRoom(rooms[this.getCurrentRoom().gety_coordinate()][newX]);
-        			this.getCurrentRoom().setVisited(true);
-        			this.getCurrentRoom().setx_coordinate(newX);
-        			System.out.println("You step through the door to the east...");
-        			//TimeUnit.SECONDS.sleep(1);
-        			this.getCurrentRoom().describe();
-        		}
-        		break;
-        	default: return;
+					this.previousRoom = this.getCurrentRoom();
+					newX = this.getCurrentRoom().getx_coordinate() + 1;
+					this.setCurrentRoom(rooms[this.getCurrentRoom().gety_coordinate()][newX]);
+					this.getCurrentRoom().setVisited(true);
+					this.getCurrentRoom().setx_coordinate(newX);
+					System.out.println("You step through the door to the east...");
+					TimeUnit.SECONDS.sleep(1);
+					this.getCurrentRoom().describe();
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
-    
-
-
+	
+		
+ 
 	}
 }

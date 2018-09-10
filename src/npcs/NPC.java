@@ -1,5 +1,5 @@
 package npcs;
 
-public class NPC {
+public abstract class  NPC {
 
 }

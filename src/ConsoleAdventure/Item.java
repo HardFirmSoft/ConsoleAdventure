@@ -1,6 +1,0 @@
-package ConsoleAdventure;
-
-class Item {
-
-	
-}

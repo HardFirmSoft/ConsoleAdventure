@@ -1,6 +1,7 @@
 package ConsoleAdventure;
 
 import java.io.Serializable;
+import java.util.concurrent.TimeUnit;
 
 public class Player implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -9,7 +10,6 @@ public class Player implements Serializable {
 	private int STORY_STATUS;
 	private Map MAP;
 	private Inventory INV;
-	private Item HOLDING;
 	
 	Player() {
 		HP = 10.0;
@@ -17,7 +17,6 @@ public class Player implements Serializable {
 		STORY_STATUS = 0;
 		MAP = new Map();
 		INV = new Inventory(0);
-		HOLDING=null;
 	}
 	
 	Player(double HP, String NAME, double STR, int STORY_STATUS){
@@ -26,38 +25,33 @@ public class Player implements Serializable {
 		this.STORY_STATUS = STORY_STATUS;
 		MAP = new Map();
 		INV = new Inventory(10);
-		
 	}
 	
 	public void setHP(double newHP) {
 		this.HP = newHP;
 	}
-	
-	public void setNAME(String newNAME) {
-		this.NAME = newNAME;
+
+	public double getHP() {
+		return this.HP;
 	}
-	
-	public void setHOLDING(Item item) {
-		this.HOLDING = item;
-	}
-	
+
 	public void setSTORY_STATUS(int status) {
 		this.STORY_STATUS = status;
 	}
-	
-	public double getHP() {
-		return this.HP;
+
+	public int getSTORY_STATUS() {
+		return this.STORY_STATUS;
+	}
+
+	public void setNAME(String newNAME) {
+		this.NAME = newNAME;
 	}
 	
 	public String getNAME() {
 		return this.NAME;
 	}
-	
-	
-	
-	public int getSTORY_STATUS() {
-		return this.STORY_STATUS;
-	}
+
+
 	
 	public Map getMAP() {
 		return this.MAP;
@@ -76,7 +70,22 @@ public class Player implements Serializable {
 		this.INV = INV;
 	}
 	
-	public Item getHOLDING() {
-		return this.HOLDING;
+	public void run() {
+		this.getMAP().setCurrentRoom(this.getMAP().previousRoom);
 	}
+	
+	public void sneak(char direction) {
+		System.out.println("You sneak past...");
+		try {
+			TimeUnit.SECONDS.sleep(2);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		this.getMAP().move(direction);
+	}
+
+	public void fight() {
+
+	}
+	
 }

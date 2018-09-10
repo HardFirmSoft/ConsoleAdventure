@@ -4,13 +4,12 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
+import items.Item;
+
 public class Menus extends Main{
+	private String option;
 	
-	
-	String option;
-	
-	public Menus() { //basic constructor
-		
+	Menus() { //basic constructor
 		option = "";
 	}
 	
@@ -19,14 +18,11 @@ public class Menus extends Main{
 	 * Doesn't work if there are more than 5000 lines on screen.
 	 * Text will as a consequence be printed to the bottom of the console.
 	 */
-	public void clear() { 
-	
+	public void clear() {
 		for(int i=0; i<5000; i++) {
 			System.out.print("\n");
 		}
-		
 		System.out.flush();
-		
 	}
 	
 	/*
@@ -34,20 +30,26 @@ public class Menus extends Main{
 	 * Uses an infinite loop, only printing when print=1.
 	 * Launches other menus, or in the case of load, launches main game loop.
 	 */
-	void welcomeMenu() throws InterruptedException, IOException{
+	public void welcomeMenu() throws InterruptedException, IOException{
 
 		int print=1;
 		while(1<2){
 			
 			if(print==1){
 				clear();
-				System.out.print("-------------WELCOME-------------\n");
-				System.out.print("-------------Main Menu-----------\n");
-				System.out.print("Tutorial: Press 't'\n");
-				System.out.print("New Game: Press 'n'\n");
-				System.out.print("Load Game: Press 'l'\n");
-				System.out.print("Exit: Press 'q'\n");
-				System.out.print("-------------WELCOME-------------\n");
+				System.out.print(
+						"   ___                  _         _      _             _                 \n" +
+						"  / __|___ _ _  ___ ___| |___    /_\\  __| |_ _____ _ _| |_ _  _ _ _ ___  \n" +
+						" | (__/ _ \\ ' \\(_-</ _ \\ / -_)  / _ \\/ _` \\ V / -_) ' \\  _| || | '_/ -_) \n" +
+						"  \\___\\___/_||_/__/\\___/_\\___| /_/ \\_\\__,_|\\_/\\___|_||_\\__|\\_,_|_| \\___| \n" +
+						"                                                                         \n");
+				System.out.print("       -----------------------WELCOME-----------------------\n");
+				System.out.print("       ----------------------Main Menu----------------------\n");
+				System.out.print("                         Tutorial: Press 't'           \n");
+				System.out.print("                         New Game: Press 'n'           \n");
+				System.out.print("                         Load Game: Press 'l'          \n");
+				System.out.print("                           Exit: Press 'q'             \n");
+				System.out.print("       -----------------------WELCOME-----------------------\n");
 				print=0;
 			}
 			
@@ -66,8 +68,7 @@ public class Menus extends Main{
 			else if(option.charAt(0)=='l'){
 				option="\0";
 				print=1;
-				
-				File save  = new File("./src/ConsoleAdventure/savedata/player_data.ser");
+				File save  = new File("./src/ConsoleAdventure/savedata/save_data.ser");
 				if(save.exists())LoadGame.loadGame();
 				else System.out.println("Couldn't load, no game exists!");
 				GameLoop.launch();
@@ -75,7 +76,6 @@ public class Menus extends Main{
 			else if(option.charAt(0)=='n'){
 				option="\0";
 				print=1;
-				
 				newGame();
 				
 			}
@@ -97,7 +97,7 @@ public class Menus extends Main{
 	 * Only returns when input char is 'b'.
 	 * Will return to main menu.
 	 */
-	void tutorialMenu() {
+	public void tutorialMenu() {
 		option = " ";
 		clear();
 		System.out.print("-------------Tutorial-------------\n");
@@ -128,7 +128,7 @@ public class Menus extends Main{
 	 * Then launches introduction text sequence.
 	 * 
 	 */
-	void newGame() throws IOException, InterruptedException{
+ public void newGame() throws IOException, InterruptedException{
 		option = "";
 		player = new Player(); //new player with default values
 		File savedata = new File("./src/ConsoleAdventure/savedata");
@@ -150,9 +150,9 @@ public class Menus extends Main{
 			
 		
 		savedata.mkdir();
-		File mapData = new File("./src/ConsoleAdventure/savedata/save_data.ser");
-		mapData.delete();
-		mapData.createNewFile();
+		File saveData = new File("./src/ConsoleAdventure/savedata/save_data.ser");
+		saveData.delete();
+		saveData.createNewFile();
 		
 		System.out.println("What would you like to be called?"); 
 		String temp = "";
@@ -169,7 +169,7 @@ public class Menus extends Main{
 	 * Quits only if 'y' is input
 	 * 
 	 */
-	void saveMenu() throws InterruptedException{
+	public void saveMenu() throws InterruptedException{
 		int saved=0;
 		String option= "";
 
@@ -219,7 +219,7 @@ public class Menus extends Main{
 	/*
 	 * Simple menu, displays the map
 	 */
-	void mapMenu() throws InterruptedException{
+	public void mapMenu() throws InterruptedException{
 		String option = "";
 		clear();
 		player.getMAP().print();
@@ -230,27 +230,45 @@ public class Menus extends Main{
 		while(option.charAt(0)!= 'b') {
 			option="";
 			while(option.length() == 0) option = scanner.nextLine();
-				
 		}
 	}
 
-	void itemsMenu() {
-		
+	public void itemsMenu() throws InterruptedException{
 		String option = "";
 		clear();
+		Inventory inv = player.getINV();
 		
 		System.out.print("-----------Items Menu-----------\n");
-		System.out.print("Use numbers 0-9 to select an item\n");
+		System.out.print("Enter a number to select an item\n");
 		System.out.print("Press 'b' to return to game.\n");
-		player.getINV().print();
+		inv.print();
 		System.out.print("-----------Items Menu-----------\n");
-		
+
 		while(option.length()==0) option = scanner.nextLine();
-		while(option.charAt(0)!= 'b') {
-			option="";
-			while(option.length() == 0) option = scanner.nextLine();
+		while(true){
+			try{
+				if(option.charAt(0) == 'b') break;
+				int index = Integer.parseInt(option);
+				if(index > inv.getSize()){
+					throw new NumberFormatException();
+				}
+				Item item = inv.getItems().get(index);
+				item.examine();
+				TimeUnit.SECONDS.sleep(2);
+				System.out.println("Press 'u' to use: " + item.getName() + " or press 'b' to return.");
+				option="";
+				while(option.length() == 0) option = scanner.nextLine();
+				if(option.charAt(0) == 'u'){
+					clear();
+					item.use();
+					break;
+				}
+			}catch(NumberFormatException e){
+				option = "";
+				System.out.println("Enter a valid number or leave!");
+				TimeUnit.SECONDS.sleep(2);
+				while(option.length() == 0) option = scanner.nextLine();
+			}
 		}
-		
 	}
-	
 }

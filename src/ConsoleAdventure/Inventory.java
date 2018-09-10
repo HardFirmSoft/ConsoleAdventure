@@ -1,9 +1,10 @@
 package ConsoleAdventure;
 import java.io.Serializable;
 import java.util.ArrayList;
-
+import java.util.Iterator;
 import items.Item;
-public class Inventory implements Serializable{
+
+public class Inventory implements Serializable, Iterable<Item>{
 
 	private static final long serialVersionUID = 1L;
 	private int size;
@@ -43,20 +44,26 @@ public class Inventory implements Serializable{
 	public void setItems(ArrayList<Item> items) {
 		this.items = items;
 	}
-	
-	/*
-	 * Prints contents of items in a nice fashion.
-	 */
-	public boolean contains(Item key) {
-		for(int i=0; i<this.getSize(); i++) {
-			if(this.getItems().get(i).getName().equals(key.getName())) {
+
+	@Override
+	public Iterator<Item> iterator(){
+		return this.getItems().iterator();
+
+	}
+
+	public boolean contains(Item item) {
+		for(Item i: this) {
+			if(i.getName().equals(item.getName())) {
 				return true;
 			}
 		}
 		return false;
 	}
+
+	/*
+	 * Prints contents of items in a nice fashion.
+	 */
 	public void print() {
-		
 		for(int i=0; i<this.getItems().size(); i++) {
 			System.out.print(i + ":");
 			System.out.println((this.items.get(i).getName()));

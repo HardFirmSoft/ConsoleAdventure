@@ -11,20 +11,16 @@ class SaveGame extends Main implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	static void save(){
-		
 		try {
-			// savePlayerStatus();
 			 saveData();
 		
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	static void saveData() throws IOException{
-		//Write Student array to file.
-	    FileOutputStream fileOutputStream = new FileOutputStream("./src/ConsoleAdventure/savedata/player_data.ser");
+
+	private static void saveData() throws IOException{
+	    FileOutputStream fileOutputStream = new FileOutputStream("./src/ConsoleAdventure/savedata/save_data.ser");
 	    ObjectOutputStream oos = new ObjectOutputStream(fileOutputStream);
 	    oos.writeObject(player);
 	    oos.close();

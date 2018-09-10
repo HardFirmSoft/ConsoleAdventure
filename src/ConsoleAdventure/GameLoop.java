@@ -1,6 +1,7 @@
 package ConsoleAdventure;
 
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import items.Rope;
 
@@ -8,11 +9,10 @@ public class GameLoop extends Main {
 	
 	
 	public static void launch() throws InterruptedException {
-		boolean quit = false;
 		Scanner input = new Scanner(System.in);
 		int print=1;
 		player.getMAP().getCurrentRoom().describe();
-		while(quit==false) {
+		while(true) {
 			if(print==1){
 				menus.clear();
 				System.out.print("***********CONSOLE ADVENTURE**********\n");
@@ -62,9 +62,9 @@ public class GameLoop extends Main {
 			}
 			if(option.charAt(0)=='r') {
 				player.getMAP().getCurrentRoom().describe();
+				TimeUnit.SECONDS.sleep(3);
 				print=1;
 			}
 		}
-		input.close();
 	}
 }
